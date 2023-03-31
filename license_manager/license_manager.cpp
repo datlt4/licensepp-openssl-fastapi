@@ -117,7 +117,7 @@ bool P_LIC::encrypt(FILE *ifp, FILE *ofp, const char *enc_pass, int enc_iter)
  */
 bool P_LIC::encrypt(P_DATA &idata, P_DATA &odata, const char *enc_pass, int enc_iter)
 {
-    std::cout << TAGLINE << __func__ << " PASSWORD " << std::string(enc_pass) << "  " << enc_iter << std::endl;
+    //std::cout << TAGLINE << __func__ << " PASSWORD " << std::string(enc_pass) << "  " << enc_iter << std::endl;
     const uint32_t BUFSIZE = 4096;
     uint8_t *read_buf = (uint8_t *)malloc(BUFSIZE * sizeof(uint8_t));
     uint8_t *cipher_buf;
@@ -239,7 +239,7 @@ bool P_LIC::decrypt(FILE *ifp, FILE *ofp, const char *enc_pass, int enc_iter)
  */
 bool P_LIC::decrypt(P_DATA &idata, P_DATA &odata, const char *enc_pass, int enc_iter)
 {
-    std::cout << TAGLINE << __func__ << " PASSWORD " << std::string(enc_pass) << "  " << enc_iter << std::endl;
+    //std::cout << TAGLINE << __func__ << " PASSWORD " << std::string(enc_pass) << "  " << enc_iter << std::endl;
     const unsigned BUFSIZE = 4096;
     uint8_t *read_buf = (uint8_t *)malloc(BUFSIZE * sizeof(uint8_t));
     uint8_t *cipher_buf;
@@ -393,7 +393,7 @@ bool P_LIC::issuing(licenseInfo &lInfo, P_DATA &odata)
  */
 licensepp::VALIDATE_ERROR P_LIC::validateFromFile(std::string license_file, licensepp::License &license)
 {
-    std::cout << TAGLINE << std::endl;
+    //std::cout << TAGLINE << std::endl;
     LicenseManager licenseManager;
     license.loadFromFile(license_file);
     // showLicenseInfo(license);
@@ -410,7 +410,7 @@ licensepp::VALIDATE_ERROR P_LIC::validateFromFile(std::string license_file, lice
  */
 licensepp::VALIDATE_ERROR P_LIC::validate(std::string license_string, licensepp::License &license)
 {
-    std::cout << TAGLINE << std::endl;
+    //std::cout << TAGLINE << std::endl;
     LicenseManager licenseManager;
     license.load(license_string);
     // showLicenseInfo(license);
@@ -427,7 +427,7 @@ licensepp::VALIDATE_ERROR P_LIC::validate(std::string license_string, licensepp:
  */
 licensepp::VALIDATE_ERROR P_LIC::validate(P_DATA &idata, licensepp::License &license)
 {
-    std::cout << TAGLINE << std::endl;
+    //std::cout << TAGLINE << std::endl;
     LicenseManager licenseManager;
     idata.m_write((void *)"\0", 1);
     license.load(std::string((char *)idata.ptr));

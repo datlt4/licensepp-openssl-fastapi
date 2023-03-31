@@ -19,11 +19,13 @@ odata.save("encrypted.bin")
 import lic_manager as lic
 
 idata = lic.P_DATA()
-idata.load("encrypted.bin")
+idata.load("raw.bin")
 odata = lic.P_DATA()
 
 lic.decrypt(idata, odata)
 odata.save("decrypted.bin")
+
+idata.load("raw.bin")
 ```
 
 ## Sample for issuing license
@@ -115,6 +117,29 @@ else:
 
 # Show License info
 lic.showLicenseInfo(license)
+```
+
+## Sample code `P_DATA`
+
+```python
+import lic_manager as lic
+
+# Load `P_DATA` from python `bytes` type 
+a = b"1234567890qwertyuiopasdfghjklzxcvbnm"
+idata = lic.P_DATA()
+idata.m_write(a, len(a))
+
+# Encrypt `P_DATA`
+edata = lic.P_DATA()
+lic.encrypt(idata, edata)
+# e = edata.m_read(edata.size, False)
+# print(e)
+
+# Decrypt `P_DATA`
+ddata = lic.P_DATA()
+lic.decrypt(edata, ddata)
+# d = ddata.m_read(ddata.size, False)
+# print(d)
 ```
 
 # Licensepp Sever

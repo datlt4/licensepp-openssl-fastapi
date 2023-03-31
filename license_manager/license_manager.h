@@ -281,7 +281,7 @@ class LicenseManager : public licensepp::BaseLicenseManager<LicenseKeysRegister>
     }
     ~LicenseManager()
     {
-        std::cout << TAGLINE << std::endl;
+        // std::cout << TAGLINE << std::endl;
     }
 };
 
@@ -306,7 +306,7 @@ struct pipeline_data
     ~pipeline_data()
     {
         this->clear();
-        std::cout << TAGLINE << std::endl;
+        // std::cout << TAGLINE << std::endl;
     }
 
     // Copy constructor
@@ -344,6 +344,11 @@ struct pipeline_data
         return num;
     }
 
+    size_t m_write_c(char *src, size_t num, bool clear_data = false)
+    {
+        return m_write((void *)(src), num, clear_data);
+    }
+
     size_t m_read(void *dst, size_t num, bool from_begin = false)
     {
         std::lock_guard<std::mutex> lock(m_mutex);
@@ -351,7 +356,7 @@ struct pipeline_data
         if (_from < this->size)
         {
             size_t _num = ((_from + num) < this->size) ? num : (this->size - _from);
-            memcpy(dst, (T *)(this->ptr + this->read), _num);
+            memcpy(dst, (T *)(this->ptr + _from), _num);
             this->read = _from + _num;
             return _num;
         }
@@ -483,7 +488,7 @@ struct licenseInfo
     }
     ~licenseInfo()
     {
-        std::cout << TAGLINE << std::endl;
+        // std::cout << TAGLINE << std::endl;
     }
     std::string licenseeSignature;
     std::string licensee;

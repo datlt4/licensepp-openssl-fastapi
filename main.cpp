@@ -15,8 +15,19 @@ PYBIND11_MODULE(lic_manager, m)
         .def_readonly("size", &P_LIC::P_DATA::size)
         .def_readonly("read", &P_LIC::P_DATA::read)
         .def("clear", &P_DATA::clear)
-        .def("m_write", &P_DATA::m_write, "src"_a, "num"_a, "clear_data"_a = false)
-        .def("m_read", &P_DATA::m_read, "dst"_a, "num"_a, "from_begin"_a = false)
+        // .def("m_write", &P_DATA::m_write, "src"_a, "num"_a, "clear_data"_a = false)
+        .def("m_write", &P_DATA::m_write_c, "src"_a, "num"_a, "clear_data"_a = false)
+        // .def("m_read", &P_DATA::m_read, "dst"_a, "num"_a, "from_begin"_a = false)
+        .def(
+            "m_read",
+            [](P_DATA &p_data, size_t num, bool from_begin = false) -> py::bytes {
+                char *data = new char[num];
+                size_t n = p_data.m_read((void *)data, num, from_begin);
+                py::bytes bytes(reinterpret_cast<const char *>(data), n);
+                delete[] data;
+                return bytes;
+            },
+            "num"_a, "from_begin"_a = false, py::return_value_policy::take_ownership)
         .def("load", py::overload_cast<std::string &, bool>(&P_DATA::load), "filename"_a, "clear_data"_a = false)
         .def("load", py::overload_cast<char *, bool>(&P_DATA::load), "filename"_a, "clear_data"_a = false)
         .def("save", py::overload_cast<std::string &>(&P_DATA::save), "filename"_a)

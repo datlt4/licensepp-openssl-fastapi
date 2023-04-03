@@ -152,3 +152,13 @@ cmake ..
 make -j$(nproc)
 sudo make install
 ```
+
+## Start server
+
+```
+python3 server.py --host 0.0.0.0 --port 6464
+```
+
+## API
+
+![User swagger UI to show all avaiable endpoints](asset/swagger_UI.png "User swagger UI to show all avaiable endpoints").

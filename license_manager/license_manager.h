@@ -31,7 +31,7 @@
 #include <license++/base-license-manager.h>
 #include <license++/issuing-authority.h>
 
-#define ENC_ITER 280622
+#define ENC_ITER 221097
 #define ENC_PASS "9jIY876UJHGuY576tGJU76TUjhg"
 // #define LICENSEE_SIGNATURE "56D9EFEA5D55C2029EF511F79D49BFFE"
 #define LICENSEE_SIGNATURE "D712EAD67B95D09C8AF84E44ECCAA01D"

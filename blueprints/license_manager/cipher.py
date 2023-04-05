@@ -6,7 +6,7 @@ from lic_manager import ENC_ITER, ENC_PASS, LICENSEE_SIGNATURE, P_DATA, License,
 from werkzeug.datastructures import FileStorage
 import io
 import json
-from uuid import uuid4
+from datetime import datetime
 
 ns = Namespace("cipher", "Endpoint for encoding and decoding a file")
 
@@ -39,7 +39,7 @@ class EncodingClass(Resource):
                 io.BytesIO(encData.m_read(encData.size, False)),
                 mimetype='application/octet-stream',
                 as_attachment=True,
-                download_name=f'{uuid4().hex}.enc'
+                download_name=f'{datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")}.enc'
             )
         except Exception as em:
             return json.dumps({"error": str(em)}), 500
@@ -65,7 +65,7 @@ class DecodingClass(Resource):
                 io.BytesIO(decData.m_read(decData.size, False)),
                 mimetype='application/octet-stream',
                 as_attachment=True,
-                download_name=f'{uuid4().hex}.dec'
+                download_name=f'{datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")}.dec'
             )
         except Exception as em:
             return json.dumps({"error": str(em)}), 500

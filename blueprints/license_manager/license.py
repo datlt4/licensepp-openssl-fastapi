@@ -5,7 +5,7 @@ from lic_manager import ENC_ITER, ENC_PASS, LICENSEE_SIGNATURE, P_DATA, License,
 from werkzeug.datastructures import FileStorage
 import io
 import json
-from uuid import uuid4
+from datetime import datetime
 
 ns = Namespace("license", "Endpoint for issuing and validating a license")
 
@@ -52,7 +52,7 @@ class IssuingClass(Resource):
                 io.BytesIO(encData.m_read(encData.size, False)),
                 mimetype='application/octet-stream',
                 as_attachment=True,
-                download_name=f'{uuid4().hex}.lic'
+                download_name=f'{datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f-%Z")}.lic'
             )
         except Exception as em:
             return (json.dumps({"message": em})), 500

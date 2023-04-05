@@ -61,8 +61,8 @@
 
 #if LICENSEPP_OS_WINDOWS
 struct timeval {
-    long    tv_sec;         /* seconds */
-    long    tv_usec;        /* and microseconds */
+	long    tv_sec;         /* seconds */
+	long    tv_usec;        /* and microseconds */
 };
 #endif
 

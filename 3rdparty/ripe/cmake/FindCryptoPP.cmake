@@ -1,17 +1,23 @@
 # Module for locating the Crypto++ encryption library.
 #
-# Customizable variables: CRYPTOPP_ROOT_DIR This variable points to the CryptoPP
-# root directory. On Windows the library location typically will have to be
-# provided explicitly using the -D command-line option. The directory should
-# include the include/cryptopp, lib and/or bin sub-directories.
+# Customizable variables:
+#   CRYPTOPP_ROOT_DIR
+#     This variable points to the CryptoPP root directory. On Windows the
+#     library location typically will have to be provided explicitly using the
+#     -D command-line option. The directory should include the include/cryptopp,
+#     lib and/or bin sub-directories.
 #
-# Read-only variables: CRYPTOPP_FOUND Indicates whether the library has been
-# found.
+# Read-only variables:
+#   CRYPTOPP_FOUND
+#     Indicates whether the library has been found.
 #
-# CRYPTOPP_INCLUDE_DIRS Points to the CryptoPP include directory.
+#   CRYPTOPP_INCLUDE_DIRS
+#     Points to the CryptoPP include directory.
 #
-# CRYPTOPP_LIBRARIES Points to the CryptoPP libraries that should be passed to
-# target_link_libararies.
+#   CRYPTOPP_LIBRARIES
+#     Points to the CryptoPP libraries that should be passed to
+#     target_link_libararies.
+#
 #
 # Copyright (c) 2012 Sergiu Dotenco
 #
@@ -33,88 +39,80 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-include(FindPackageHandleStandardArgs)
+INCLUDE (FindPackageHandleStandardArgs)
 
-find_path(
-  CRYPTOPP_ROOT_DIR
+FIND_PATH (CRYPTOPP_ROOT_DIR
   NAMES cryptopp/cryptlib.h include/cryptopp/cryptlib.h
   PATHS ENV CRYPTOPPROOT
   DOC "CryptoPP root directory")
 
 # Re-use the previous path:
-find_path(
-  CRYPTOPP_INCLUDE_DIR
+FIND_PATH (CRYPTOPP_INCLUDE_DIR
   NAMES cryptopp/cryptlib.h
   HINTS ${CRYPTOPP_ROOT_DIR}
   PATH_SUFFIXES include
   DOC "CryptoPP include directory")
 
-find_library(
-  CRYPTOPP_LIBRARY_DEBUG
+FIND_LIBRARY (CRYPTOPP_LIBRARY_DEBUG
   NAMES cryptlibd cryptoppd
   HINTS ${CRYPTOPP_ROOT_DIR}
   PATH_SUFFIXES lib
   DOC "CryptoPP debug library")
 
-if(CryptoPP_USE_STATIC_LIBS)
-  message("==> Static linking to Crypto++")
-  find_library(
-    CRYPTOPP_LIBRARY_RELEASE
-    NAMES libcryptopp.a cryptlib-static cryptopp-static
-    HINTS ${CRYPTOPP_ROOT_DIR}
-    PATH_SUFFIXES lib
-    DOC "CryptoPP release library")
+if (CryptoPP_USE_STATIC_LIBS)
+    message ("==> Static linking to Crypto++")
+    FIND_LIBRARY (CRYPTOPP_LIBRARY_RELEASE
+      NAMES libcryptopp.a cryptlib-static cryptopp-static
+      HINTS ${CRYPTOPP_ROOT_DIR}
+      PATH_SUFFIXES lib
+      DOC "CryptoPP release library")
 else()
-  message("==> Dynamic linking to Crypto++")
-  find_library(
-    CRYPTOPP_LIBRARY_RELEASE
-    NAMES libcryptopp.dylib cryptlib cryptopp
-    HINTS ${CRYPTOPP_ROOT_DIR}
-    PATH_SUFFIXES lib
-    DOC "CryptoPP release library")
+    message ("==> Dynamic linking to Crypto++")
+    FIND_LIBRARY (CRYPTOPP_LIBRARY_RELEASE
+      NAMES libcryptopp.dylib cryptlib cryptopp
+      HINTS ${CRYPTOPP_ROOT_DIR}
+      PATH_SUFFIXES lib
+      DOC "CryptoPP release library")
 endif()
 
-if(CRYPTOPP_LIBRARY_DEBUG AND CRYPTOPP_LIBRARY_RELEASE)
-  set(CRYPTOPP_LIBRARY
-      optimized ${CRYPTOPP_LIBRARY_RELEASE} debug ${CRYPTOPP_LIBRARY_DEBUG}
-      CACHE DOC "CryptoPP library")
-elseif(CRYPTOPP_LIBRARY_RELEASE)
-  set(CRYPTOPP_LIBRARY
-      ${CRYPTOPP_LIBRARY_RELEASE}
-      CACHE DOC "CryptoPP library")
-endif(CRYPTOPP_LIBRARY_DEBUG AND CRYPTOPP_LIBRARY_RELEASE)
+IF (CRYPTOPP_LIBRARY_DEBUG AND CRYPTOPP_LIBRARY_RELEASE)
+  SET (CRYPTOPP_LIBRARY
+    optimized ${CRYPTOPP_LIBRARY_RELEASE}
+    debug ${CRYPTOPP_LIBRARY_DEBUG} CACHE DOC "CryptoPP library")
+ELSEIF (CRYPTOPP_LIBRARY_RELEASE)
+  SET (CRYPTOPP_LIBRARY ${CRYPTOPP_LIBRARY_RELEASE} CACHE DOC
+    "CryptoPP library")
+ENDIF (CRYPTOPP_LIBRARY_DEBUG AND CRYPTOPP_LIBRARY_RELEASE)
 
-if(CRYPTOPP_INCLUDE_DIR)
-  set(_CRYPTOPP_VERSION_HEADER ${CRYPTOPP_INCLUDE_DIR}/cryptopp/config.h)
+IF (CRYPTOPP_INCLUDE_DIR)
+  SET (_CRYPTOPP_VERSION_HEADER ${CRYPTOPP_INCLUDE_DIR}/cryptopp/config.h)
 
-  if(EXISTS ${_CRYPTOPP_VERSION_HEADER})
-    file(STRINGS ${_CRYPTOPP_VERSION_HEADER} _CRYPTOPP_VERSION_TMP
-         REGEX "^#define CRYPTOPP_VERSION[ \t]+[0-9]+$")
+  IF (EXISTS ${_CRYPTOPP_VERSION_HEADER})
+    FILE (STRINGS ${_CRYPTOPP_VERSION_HEADER} _CRYPTOPP_VERSION_TMP REGEX
+      "^#define CRYPTOPP_VERSION[ \t]+[0-9]+$")
 
-    string(REGEX REPLACE "^#define CRYPTOPP_VERSION[ \t]+([0-9]+)" "\\1"
-                         _CRYPTOPP_VERSION_TMP "${_CRYPTOPP_VERSION_TMP}")
+    STRING (REGEX REPLACE
+      "^#define CRYPTOPP_VERSION[ \t]+([0-9]+)" "\\1" _CRYPTOPP_VERSION_TMP
+      "${_CRYPTOPP_VERSION_TMP}")
 
-    string(REGEX REPLACE "([0-9]+)[0-9][0-9]" "\\1" CRYPTOPP_VERSION_MAJOR
-                         "${_CRYPTOPP_VERSION_TMP}")
-    string(REGEX REPLACE "[0-9]([0-9])[0-9]" "\\1" CRYPTOPP_VERSION_MINOR
-                         "${_CRYPTOPP_VERSION_TMP}")
-    string(REGEX REPLACE "[0-9][0-9]([0-9])" "\\1" CRYPTOPP_VERSION_PATCH
-                         "${_CRYPTOPP_VERSION_TMP}")
+    STRING (REGEX REPLACE "([0-9]+)[0-9][0-9]" "\\1" CRYPTOPP_VERSION_MAJOR
+      "${_CRYPTOPP_VERSION_TMP}")
+    STRING (REGEX REPLACE "[0-9]([0-9])[0-9]" "\\1" CRYPTOPP_VERSION_MINOR
+      "${_CRYPTOPP_VERSION_TMP}")
+    STRING (REGEX REPLACE "[0-9][0-9]([0-9])" "\\1" CRYPTOPP_VERSION_PATCH
+      "${_CRYPTOPP_VERSION_TMP}")
 
-    set(CRYPTOPP_VERSION_COUNT 3)
-    set(CRYPTOPP_VERSION
-        ${CRYPTOPP_VERSION_MAJOR}.${CRYPTOPP_VERSION_MINOR}.${CRYPTOPP_VERSION_PATCH}
-    )
-  endif(EXISTS ${_CRYPTOPP_VERSION_HEADER})
-endif(CRYPTOPP_INCLUDE_DIR)
+    SET (CRYPTOPP_VERSION_COUNT 3)
+    SET (CRYPTOPP_VERSION
+      ${CRYPTOPP_VERSION_MAJOR}.${CRYPTOPP_VERSION_MINOR}.${CRYPTOPP_VERSION_PATCH})
+  ENDIF (EXISTS ${_CRYPTOPP_VERSION_HEADER})
+ENDIF (CRYPTOPP_INCLUDE_DIR)
 
-set(CRYPTOPP_INCLUDE_DIRS ${CRYPTOPP_INCLUDE_DIR})
-set(CRYPTOPP_LIBRARIES ${CRYPTOPP_LIBRARY})
+SET (CRYPTOPP_INCLUDE_DIRS ${CRYPTOPP_INCLUDE_DIR})
+SET (CRYPTOPP_LIBRARIES ${CRYPTOPP_LIBRARY})
 
-mark_as_advanced(CRYPTOPP_INCLUDE_DIR CRYPTOPP_LIBRARY CRYPTOPP_LIBRARY_DEBUG
-                 CRYPTOPP_LIBRARY_RELEASE)
+MARK_AS_ADVANCED (CRYPTOPP_INCLUDE_DIR CRYPTOPP_LIBRARY CRYPTOPP_LIBRARY_DEBUG
+  CRYPTOPP_LIBRARY_RELEASE)
 
-find_package_handle_standard_args(
-  CryptoPP
-  REQUIRED_VARS CRYPTOPP_ROOT_DIR CRYPTOPP_INCLUDE_DIR CRYPTOPP_LIBRARY
-  VERSION_VAR CRYPTOPP_VERSION)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS (CryptoPP REQUIRED_VARS CRYPTOPP_ROOT_DIR
+  CRYPTOPP_INCLUDE_DIR CRYPTOPP_LIBRARY VERSION_VAR CRYPTOPP_VERSION)

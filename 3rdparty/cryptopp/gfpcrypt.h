@@ -295,10 +295,10 @@ public:
 
     virtual ~DL_GroupParameters_ElGamal() {}
 
-    Integer GetMaxExponent() const
-    {
-        return GetSubgroupOrder()-1;
-    }
+	Integer GetMaxExponent() const
+	{
+		return GetSubgroupOrder()-1;
+	}
 };
 
 /// \brief GDSA algorithm

@@ -136,7 +136,7 @@
   <!--
   <Target Condition="!Exists('Win32\Output\Debug\cryptest.exe')" Name="MAC tool" Label="MAC tool">
     <Message
-      Text="Creating Win32/Debug cryptest.exe for MAC computation" />
+	  Text="Creating Win32/Debug cryptest.exe for MAC computation" />
     <MSbuild
       Projects="cryptlib.vcxproj"
       Properties="Configuration=Debug;Platform=Win32;"/>

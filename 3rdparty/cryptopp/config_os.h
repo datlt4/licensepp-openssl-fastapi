@@ -51,16 +51,16 @@
 
 // Microsoft compilers
 #if defined(_MSC_VER) || defined(__fastcall)
-    #define CRYPTOPP_FASTCALL __fastcall
+	#define CRYPTOPP_FASTCALL __fastcall
 #else
-    #define CRYPTOPP_FASTCALL
+	#define CRYPTOPP_FASTCALL
 #endif
 
 // Microsoft compilers
 #if defined(_MSC_VER)
-    #define CRYPTOPP_NO_VTABLE __declspec(novtable)
+	#define CRYPTOPP_NO_VTABLE __declspec(novtable)
 #else
-    #define CRYPTOPP_NO_VTABLE
+	#define CRYPTOPP_NO_VTABLE
 #endif
 
 // Define this if you want to disable all OS-dependent features,
@@ -123,23 +123,23 @@
 #endif  // CRYPTOPP_INIT_PRIORITY, NO_OS_DEPENDENCE, Apple, Sun
 
 #if defined(CRYPTOPP_WIN32_AVAILABLE) || defined(CRYPTOPP_UNIX_AVAILABLE)
-#   define HIGHRES_TIMER_AVAILABLE
+#	define HIGHRES_TIMER_AVAILABLE
 #endif
 
 #ifdef CRYPTOPP_WIN32_AVAILABLE
 # if !defined(WINAPI_FAMILY)
-#   define THREAD_TIMER_AVAILABLE
+#	define THREAD_TIMER_AVAILABLE
 # elif defined(WINAPI_FAMILY)
 #   if (WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP))
-#     define THREAD_TIMER_AVAILABLE
+#	  define THREAD_TIMER_AVAILABLE
 #  endif
 # endif
 #endif
 
 #if defined(CRYPTOPP_UNIX_AVAILABLE) || defined(CRYPTOPP_DOXYGEN_PROCESSING)
-#   define NONBLOCKING_RNG_AVAILABLE
-#   define BLOCKING_RNG_AVAILABLE
-#   define OS_RNG_AVAILABLE
+#	define NONBLOCKING_RNG_AVAILABLE
+#	define BLOCKING_RNG_AVAILABLE
+#	define OS_RNG_AVAILABLE
 #endif
 
 // Cygwin/Newlib requires _XOPEN_SOURCE=600
@@ -149,21 +149,21 @@
 
 #ifdef CRYPTOPP_WIN32_AVAILABLE
 # if !defined(WINAPI_FAMILY)
-#   define NONBLOCKING_RNG_AVAILABLE
-#   define OS_RNG_AVAILABLE
+#	define NONBLOCKING_RNG_AVAILABLE
+#	define OS_RNG_AVAILABLE
 # elif defined(WINAPI_FAMILY)
 #   if (WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP))
-#     define NONBLOCKING_RNG_AVAILABLE
-#     define OS_RNG_AVAILABLE
+#	  define NONBLOCKING_RNG_AVAILABLE
+#	  define OS_RNG_AVAILABLE
 #   elif !(WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP))
 #     if ((WINVER >= 0x0A00 /*_WIN32_WINNT_WIN10*/) || (_WIN32_WINNT >= 0x0A00 /*_WIN32_WINNT_WIN10*/))
-#       define NONBLOCKING_RNG_AVAILABLE
-#       define OS_RNG_AVAILABLE
+#	    define NONBLOCKING_RNG_AVAILABLE
+#	    define OS_RNG_AVAILABLE
 #     endif
 #   endif
 # endif
 #endif
 
-#endif  // NO_OS_DEPENDENCE
+#endif	// NO_OS_DEPENDENCE
 
 #endif  // CRYPTOPP_CONFIG_OS_H

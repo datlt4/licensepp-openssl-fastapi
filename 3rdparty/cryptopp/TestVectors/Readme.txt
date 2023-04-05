@@ -28,11 +28,11 @@ signed int - small integer (less than 2^32) in decimal representation
 unsigned long - large integer (less than 2^64) convertible by strtoul or strtoull
 string - human readable string
 encoded string - can be one of the following
-    - quoted string: "message" means "message" without the quotes
-      or terminating '\0'
-    - hex encoded string: 0x74657374 or 74657374 means "test"
-    - repeated string: r100 "message" to repeat "message" 100 times, or
-      r256 0x0011 to repeat 0x0011 256 times
+	- quoted string: "message" means "message" without the quotes
+	  or terminating '\0'
+	- hex encoded string: 0x74657374 or 74657374 means "test"
+	- repeated string: r100 "message" to repeat "message" 100 times, or
+	  r256 0x0011 to repeat 0x0011 256 times
 
 Field Types
 ===========

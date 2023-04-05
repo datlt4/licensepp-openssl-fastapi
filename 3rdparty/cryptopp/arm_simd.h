@@ -19,7 +19,7 @@
 #endif
 
 #if (CRYPTOPP_ARM_CRC32_AVAILABLE) || defined(CRYPTOPP_DOXYGEN_PROCESSING)
-/// \name CRC32 checksum
+///	\name CRC32 checksum
 //@{
 
 /// \brief CRC32 checksum
@@ -30,7 +30,7 @@
 inline uint32_t CRC32B (uint32_t crc, uint8_t val)
 {
 #if defined(_MSC_VER)
-    return __crc32b(crc, val);
+	return __crc32b(crc, val);
 #else
     __asm__ ("crc32b   %w0, %w0, %w1   \n\t"
             :"+r" (crc) : "r" (val) );
@@ -46,7 +46,7 @@ inline uint32_t CRC32B (uint32_t crc, uint8_t val)
 inline uint32_t CRC32W (uint32_t crc, uint32_t val)
 {
 #if defined(_MSC_VER)
-    return __crc32w(crc, val);
+	return __crc32w(crc, val);
 #else
     __asm__ ("crc32w   %w0, %w0, %w1   \n\t"
             :"+r" (crc) : "r" (val) );
@@ -62,7 +62,7 @@ inline uint32_t CRC32W (uint32_t crc, uint32_t val)
 inline uint32_t CRC32Wx4 (uint32_t crc, const uint32_t vals[4])
 {
 #if defined(_MSC_VER)
-    return __crc32w(__crc32w(__crc32w(__crc32w(
+	return __crc32w(__crc32w(__crc32w(__crc32w(
              crc, vals[0]), vals[1]), vals[2]), vals[3]);
 #else
     __asm__ ("crc32w   %w0, %w0, %w1   \n\t"
@@ -76,7 +76,7 @@ inline uint32_t CRC32Wx4 (uint32_t crc, const uint32_t vals[4])
 }
 
 //@}
-/// \name CRC32-C checksum
+///	\name CRC32-C checksum
 
 /// \brief CRC32-C checksum
 /// \param crc the starting crc value
@@ -86,7 +86,7 @@ inline uint32_t CRC32Wx4 (uint32_t crc, const uint32_t vals[4])
 inline uint32_t CRC32CB (uint32_t crc, uint8_t val)
 {
 #if defined(_MSC_VER)
-    return __crc32cb(crc, val);
+	return __crc32cb(crc, val);
 #else
     __asm__ ("crc32cb   %w0, %w0, %w1   \n\t"
             :"+r" (crc) : "r" (val) );
@@ -102,7 +102,7 @@ inline uint32_t CRC32CB (uint32_t crc, uint8_t val)
 inline uint32_t CRC32CW (uint32_t crc, uint32_t val)
 {
 #if defined(_MSC_VER)
-    return __crc32cw(crc, val);
+	return __crc32cw(crc, val);
 #else
     __asm__ ("crc32cw   %w0, %w0, %w1   \n\t"
             :"+r" (crc) : "r" (val) );
@@ -118,7 +118,7 @@ inline uint32_t CRC32CW (uint32_t crc, uint32_t val)
 inline uint32_t CRC32CWx4 (uint32_t crc, const uint32_t vals[4])
 {
 #if defined(_MSC_VER)
-    return __crc32cw(__crc32cw(__crc32cw(__crc32cw(
+	return __crc32cw(__crc32cw(__crc32cw(__crc32cw(
              crc, vals[0]), vals[1]), vals[2]), vals[3]);
 #else
     __asm__ ("crc32cw   %w0, %w0, %w1   \n\t"
@@ -134,7 +134,7 @@ inline uint32_t CRC32CWx4 (uint32_t crc, const uint32_t vals[4])
 #endif  // CRYPTOPP_ARM_CRC32_AVAILABLE
 
 #if (CRYPTOPP_ARM_PMULL_AVAILABLE) || defined(CRYPTOPP_DOXYGEN_PROCESSING)
-/// \name Polynomial multiplication
+///	\name Polynomial multiplication
 //@{
 
 /// \brief Polynomial multiplication
@@ -357,7 +357,7 @@ inline uint64x2_t VEXT_U8(uint64x2_t a, uint64x2_t b)
 #endif // CRYPTOPP_ARM_PMULL_AVAILABLE
 
 #if CRYPTOPP_ARM_SHA3_AVAILABLE  || defined(CRYPTOPP_DOXYGEN_PROCESSING)
-/// \name ARMv8.2 operations
+///	\name ARMv8.2 operations
 //@{
 
 /// \brief Three-way XOR

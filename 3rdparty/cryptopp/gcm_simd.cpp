@@ -159,7 +159,7 @@ bool CPU_ProbePMULL()
 #if CRYPTOPP_ARM_NEON_AVAILABLE
 void GCM_Xor16_NEON(byte *a, const byte *b, const byte *c)
 {
-    vst1q_u8(a, veorq_u8(vld1q_u8(b), vld1q_u8(c)));
+	vst1q_u8(a, veorq_u8(vld1q_u8(b), vld1q_u8(c)));
 }
 #endif  // CRYPTOPP_ARM_NEON_AVAILABLE
 

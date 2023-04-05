@@ -79,36 +79,36 @@
 #if !defined(CRYPTOPP_DISABLE_ASM)
 
 #if (defined(_MSC_VER) && defined(_M_IX86)) || ((defined(__GNUC__) && (defined(__i386__)) || defined(__x86_64__)))
-    // C++Builder 2010 does not allow "call label" where label is defined within inline assembly
-    #define CRYPTOPP_X86_ASM_AVAILABLE 1
+	// C++Builder 2010 does not allow "call label" where label is defined within inline assembly
+	#define CRYPTOPP_X86_ASM_AVAILABLE 1
 
-    #if !defined(CRYPTOPP_DISABLE_SSE2) && (defined(_MSC_VER) || CRYPTOPP_GCC_VERSION >= 30300 || defined(__SSE2__))
-        #define CRYPTOPP_SSE2_ASM_AVAILABLE 1
-    #endif
+	#if !defined(CRYPTOPP_DISABLE_SSE2) && (defined(_MSC_VER) || CRYPTOPP_GCC_VERSION >= 30300 || defined(__SSE2__))
+		#define CRYPTOPP_SSE2_ASM_AVAILABLE 1
+	#endif
 
-    #if !defined(CRYPTOPP_DISABLE_SSSE3) && (_MSC_VER >= 1500 || CRYPTOPP_GCC_VERSION >= 40300 || defined(__SSSE3__))
-        #define CRYPTOPP_SSSE3_ASM_AVAILABLE 1
-    #endif
+	#if !defined(CRYPTOPP_DISABLE_SSSE3) && (_MSC_VER >= 1500 || CRYPTOPP_GCC_VERSION >= 40300 || defined(__SSSE3__))
+		#define CRYPTOPP_SSSE3_ASM_AVAILABLE 1
+	#endif
 #endif
 
 #if defined(_MSC_VER) && defined(_M_X64)
-    #define CRYPTOPP_X64_MASM_AVAILABLE 1
+	#define CRYPTOPP_X64_MASM_AVAILABLE 1
 #endif
 
 #if defined(__GNUC__) && defined(__x86_64__)
-    #define CRYPTOPP_X64_ASM_AVAILABLE 1
+	#define CRYPTOPP_X64_ASM_AVAILABLE 1
 #endif
 
 // 32-bit SunCC does not enable SSE2 by default.
 #if !defined(CRYPTOPP_DISABLE_SSE2) && (defined(_MSC_VER) || CRYPTOPP_GCC_VERSION >= 30300 || defined(__SSE2__) || (__SUNPRO_CC >= 0x5100))
-    #define CRYPTOPP_SSE2_INTRIN_AVAILABLE 1
+	#define CRYPTOPP_SSE2_INTRIN_AVAILABLE 1
 #endif
 
 #if !defined(CRYPTOPP_DISABLE_SSSE3)
 # if defined(__SSSE3__) || (_MSC_VER >= 1500) || \
-    (CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1000) || (__SUNPRO_CC >= 0x5110) || \
-    (CRYPTOPP_LLVM_CLANG_VERSION >= 20300) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40000)
-    #define CRYPTOPP_SSSE3_AVAILABLE 1
+	(CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1000) || (__SUNPRO_CC >= 0x5110) || \
+	(CRYPTOPP_LLVM_CLANG_VERSION >= 20300) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40000)
+	#define CRYPTOPP_SSSE3_AVAILABLE 1
 # endif
 #endif
 
@@ -116,54 +116,54 @@
 // MSVC 2008 (http://msdn.microsoft.com/en-us/library/bb892950%28v=vs.90%29.aspx)
 // SunCC could generate SSE4 at 12.1, but the intrinsics are missing until 12.4.
 #if !defined(CRYPTOPP_DISABLE_SSE4) && defined(CRYPTOPP_SSSE3_AVAILABLE) && \
-    (defined(__SSE4_1__) || (CRYPTOPP_MSC_VERSION >= 1500) || \
-    (CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1000) || (__SUNPRO_CC >= 0x5110) || \
-    (CRYPTOPP_LLVM_CLANG_VERSION >= 20300) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40000))
-    #define CRYPTOPP_SSE41_AVAILABLE 1
+	(defined(__SSE4_1__) || (CRYPTOPP_MSC_VERSION >= 1500) || \
+	(CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1000) || (__SUNPRO_CC >= 0x5110) || \
+	(CRYPTOPP_LLVM_CLANG_VERSION >= 20300) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40000))
+	#define CRYPTOPP_SSE41_AVAILABLE 1
 #endif
 
 #if !defined(CRYPTOPP_DISABLE_SSE4) && defined(CRYPTOPP_SSSE3_AVAILABLE) && \
-    (defined(__SSE4_2__) || (CRYPTOPP_MSC_VERSION >= 1500) || (__SUNPRO_CC >= 0x5110) || \
-    (CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1000) || \
-    (CRYPTOPP_LLVM_CLANG_VERSION >= 20300) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40000))
-    #define CRYPTOPP_SSE42_AVAILABLE 1
+	(defined(__SSE4_2__) || (CRYPTOPP_MSC_VERSION >= 1500) || (__SUNPRO_CC >= 0x5110) || \
+	(CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1000) || \
+	(CRYPTOPP_LLVM_CLANG_VERSION >= 20300) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40000))
+	#define CRYPTOPP_SSE42_AVAILABLE 1
 #endif
 
 // Couple to CRYPTOPP_DISABLE_AESNI, but use CRYPTOPP_CLMUL_AVAILABLE so we can selectively
 //  disable for misbehaving platforms and compilers, like Solaris or some Clang.
 #if defined(CRYPTOPP_DISABLE_AESNI)
-    #define CRYPTOPP_DISABLE_CLMUL 1
+	#define CRYPTOPP_DISABLE_CLMUL 1
 #endif
 
 // Requires Sun Studio 12.3 (SunCC 0x5120) in theory.
 #if !defined(CRYPTOPP_DISABLE_CLMUL) && defined(CRYPTOPP_SSE42_AVAILABLE) && \
-    (defined(__PCLMUL__) || (_MSC_FULL_VER >= 150030729) || (__SUNPRO_CC >= 0x5120) || \
-    (CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1110) || \
-    (CRYPTOPP_LLVM_CLANG_VERSION >= 30200) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40300))
-    #define CRYPTOPP_CLMUL_AVAILABLE 1
+	(defined(__PCLMUL__) || (_MSC_FULL_VER >= 150030729) || (__SUNPRO_CC >= 0x5120) || \
+	(CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1110) || \
+	(CRYPTOPP_LLVM_CLANG_VERSION >= 30200) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40300))
+	#define CRYPTOPP_CLMUL_AVAILABLE 1
 #endif
 
 // Requires Sun Studio 12.3 (SunCC 0x5120)
 #if !defined(CRYPTOPP_DISABLE_AESNI) && defined(CRYPTOPP_SSE42_AVAILABLE) && \
-    (defined(__AES__) || (_MSC_FULL_VER >= 150030729) || (__SUNPRO_CC >= 0x5120) || \
-    (CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1110) || \
-    (CRYPTOPP_LLVM_CLANG_VERSION >= 30200) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40300))
-    #define CRYPTOPP_AESNI_AVAILABLE 1
+	(defined(__AES__) || (_MSC_FULL_VER >= 150030729) || (__SUNPRO_CC >= 0x5120) || \
+	(CRYPTOPP_GCC_VERSION >= 40300) || (__INTEL_COMPILER >= 1110) || \
+	(CRYPTOPP_LLVM_CLANG_VERSION >= 30200) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40300))
+	#define CRYPTOPP_AESNI_AVAILABLE 1
 #endif
 
 // Requires Binutils 2.24
 #if !defined(CRYPTOPP_DISABLE_AVX) && defined(CRYPTOPP_SSE42_AVAILABLE) && \
-    (defined(__AVX2__) || (CRYPTOPP_MSC_VERSION >= 1800) || (__SUNPRO_CC >= 0x5130) || \
-    (CRYPTOPP_GCC_VERSION >= 40700) || (__INTEL_COMPILER >= 1400) || \
-    (CRYPTOPP_LLVM_CLANG_VERSION >= 30100) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40600))
+	(defined(__AVX2__) || (CRYPTOPP_MSC_VERSION >= 1800) || (__SUNPRO_CC >= 0x5130) || \
+	(CRYPTOPP_GCC_VERSION >= 40700) || (__INTEL_COMPILER >= 1400) || \
+	(CRYPTOPP_LLVM_CLANG_VERSION >= 30100) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40600))
 #define CRYPTOPP_AVX_AVAILABLE 1
 #endif
 
 // Requires Binutils 2.24
 #if !defined(CRYPTOPP_DISABLE_AVX2) && defined(CRYPTOPP_AVX_AVAILABLE) && \
-    (defined(__AVX2__) || (CRYPTOPP_MSC_VERSION >= 1800) || (__SUNPRO_CC >= 0x5130) || \
-    (CRYPTOPP_GCC_VERSION >= 40900) || (__INTEL_COMPILER >= 1400) || \
-    (CRYPTOPP_LLVM_CLANG_VERSION >= 30100) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40600))
+	(defined(__AVX2__) || (CRYPTOPP_MSC_VERSION >= 1800) || (__SUNPRO_CC >= 0x5130) || \
+	(CRYPTOPP_GCC_VERSION >= 40900) || (__INTEL_COMPILER >= 1400) || \
+	(CRYPTOPP_LLVM_CLANG_VERSION >= 30100) || (CRYPTOPP_APPLE_CLANG_VERSION >= 40600))
 #define CRYPTOPP_AVX2_AVAILABLE 1
 #endif
 
@@ -172,34 +172,34 @@
 // Guessing for Intel ICPC. A slide deck says SHA support is in version 16.0-beta
 // https://www.alcf.anl.gov/files/ken_intel_compiler_optimization.pdf
 #if !defined(CRYPTOPP_DISABLE_SHANI) && defined(CRYPTOPP_SSE42_AVAILABLE) && \
-    (defined(__SHA__) || (CRYPTOPP_MSC_VERSION >= 1900) || (__SUNPRO_CC >= 0x5160) || \
-    (CRYPTOPP_GCC_VERSION >= 40900) || (__INTEL_COMPILER >= 1600) || \
-    (CRYPTOPP_LLVM_CLANG_VERSION >= 30400) || (CRYPTOPP_APPLE_CLANG_VERSION >= 50100))
-    #define CRYPTOPP_SHANI_AVAILABLE 1
+	(defined(__SHA__) || (CRYPTOPP_MSC_VERSION >= 1900) || (__SUNPRO_CC >= 0x5160) || \
+	(CRYPTOPP_GCC_VERSION >= 40900) || (__INTEL_COMPILER >= 1600) || \
+	(CRYPTOPP_LLVM_CLANG_VERSION >= 30400) || (CRYPTOPP_APPLE_CLANG_VERSION >= 50100))
+	#define CRYPTOPP_SHANI_AVAILABLE 1
 #endif
 
 // RDRAND uses byte codes. All we need is x86 ASM for it.
 // However tie it to AES-NI since SecureKey was available with it.
 #if !defined(CRYPTOPP_DISABLE_RDRAND) && defined(CRYPTOPP_AESNI_AVAILABLE)
-    #define CRYPTOPP_RDRAND_AVAILABLE 1
+	#define CRYPTOPP_RDRAND_AVAILABLE 1
 #endif
 
 // RDSEED uses byte codes. All we need is x86 ASM for it.
 // However tie it to AES-NI since SecureKey was available with it.
 #if !defined(CRYPTOPP_DISABLE_RDSEED) && defined(CRYPTOPP_AESNI_AVAILABLE)
-    #define CRYPTOPP_RDSEED_AVAILABLE 1
+	#define CRYPTOPP_RDSEED_AVAILABLE 1
 #endif
 
 // PadlockRNG uses byte codes. All we need is x86 ASM for it.
 #if !defined(CRYPTOPP_DISABLE_PADLOCK) && \
-    !(defined(__ANDROID__) || defined(ANDROID) || defined(__APPLE__)) && \
-    defined(CRYPTOPP_X86_ASM_AVAILABLE)
-    #define CRYPTOPP_PADLOCK_AVAILABLE 1
-    #define CRYPTOPP_PADLOCK_RNG_AVAILABLE 1
-    #define CRYPTOPP_PADLOCK_ACE_AVAILABLE 1
-    #define CRYPTOPP_PADLOCK_ACE2_AVAILABLE 1
-    #define CRYPTOPP_PADLOCK_PHE_AVAILABLE 1
-    #define CRYPTOPP_PADLOCK_PMM_AVAILABLE 1
+	!(defined(__ANDROID__) || defined(ANDROID) || defined(__APPLE__)) && \
+	defined(CRYPTOPP_X86_ASM_AVAILABLE)
+	#define CRYPTOPP_PADLOCK_AVAILABLE 1
+	#define CRYPTOPP_PADLOCK_RNG_AVAILABLE 1
+	#define CRYPTOPP_PADLOCK_ACE_AVAILABLE 1
+	#define CRYPTOPP_PADLOCK_ACE2_AVAILABLE 1
+	#define CRYPTOPP_PADLOCK_PHE_AVAILABLE 1
+	#define CRYPTOPP_PADLOCK_PMM_AVAILABLE 1
 #endif
 
 // Fixup for SunCC 12.1-12.4. Bad code generation in AES_Encrypt and friends.
@@ -400,7 +400,7 @@
 // An old Apple G5 with GCC 4.01 has AltiVec, but its only Power4 or so.
 #if !defined(CRYPTOPP_ALTIVEC_AVAILABLE)
 # if defined(_ARCH_PWR4) || defined(__ALTIVEC__) || \
-    (CRYPTOPP_XLC_VERSION >= 100000) || (CRYPTOPP_GCC_VERSION >= 40001) || \
+	(CRYPTOPP_XLC_VERSION >= 100000) || (CRYPTOPP_GCC_VERSION >= 40001) || \
     (CRYPTOPP_LLVM_CLANG_VERSION >= 20900)
 #  define CRYPTOPP_ALTIVEC_AVAILABLE 1
 # endif

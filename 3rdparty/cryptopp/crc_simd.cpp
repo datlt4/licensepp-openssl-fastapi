@@ -155,11 +155,11 @@ void CRC32C_Update_SSE42(const byte *s, size_t n, word32& c)
         c = _mm_crc32_u8(c, *s);
 
     for(; n >= 16; s+=16, n-=16)
-    {
+	{
         c = _mm_crc32_u32(_mm_crc32_u32(_mm_crc32_u32(_mm_crc32_u32(c,
             *CONST_WORD32_CAST(s+ 0)), *CONST_WORD32_CAST(s+ 4)),
             *CONST_WORD32_CAST(s+ 8)), *CONST_WORD32_CAST(s+12));
-    }
+	}
 
     for(; n >= 4; s+=4, n-=4)
         c = _mm_crc32_u32(c, *CONST_WORD32_CAST(s));

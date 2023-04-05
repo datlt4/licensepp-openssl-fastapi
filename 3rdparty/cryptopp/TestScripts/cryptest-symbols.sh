@@ -26,16 +26,16 @@ NEW_VERSION_TAG=master
 DIRTY=$(git diff --shortstat 2> /dev/null | tail -1)
 if [[ ! -z "$DIRTY" ]]; then
 
-    echo
-    echo "The local repo is dirty. Continuing will reset the repo and lose changes."
-    read -p "Type 'Y' to proceed or 'N' to exit. Proceed? " -n 1 -r
-    echo # (optional) move to a new line
-    if [[ !($REPLY =~ ^[Yy]$) ]]; then
-        exit 0
-    fi
+	echo
+	echo "The local repo is dirty. Continuing will reset the repo and lose changes."
+	read -p "Type 'Y' to proceed or 'N' to exit. Proceed? " -n 1 -r
+	echo # (optional) move to a new line
+	if [[ !($REPLY =~ ^[Yy]$) ]]; then
+		exit 0
+	fi
 else
-    echo
-    echo "The local repo is clean. Proceeding..."
+	echo
+	echo "The local repo is clean. Proceeding..."
 fi
 
 #############################################################################
@@ -79,20 +79,20 @@ if [[ "${IS_PPC64}" -eq 1 ]]; then IS_PPC32=0; fi
 
 # Fixup
 if [[ "$IS_FREEBSD" -ne "0" || "$IS_OPENBSD" -ne "0" || "$IS_NETBSD" -ne "0" ]]; then
-    MAKE=gmake
+	MAKE=gmake
 elif [[ "$IS_SOLARIS" -ne "0" ]]; then
-    MAKE=$(command -v gmake 2>/dev/null | "${GREP}" -v "no gmake" | head -1)
-    if [[ -z "$MAKE" && -e "/usr/sfw/bin/gmake" ]]; then
-        MAKE=/usr/sfw/bin/gmake
-    fi
+	MAKE=$(command -v gmake 2>/dev/null | "${GREP}" -v "no gmake" | head -1)
+	if [[ -z "$MAKE" && -e "/usr/sfw/bin/gmake" ]]; then
+		MAKE=/usr/sfw/bin/gmake
+	fi
 else
-    MAKE=make
+	MAKE=make
 fi
 
 if [[ "$IS_DARWIN" -ne "0" ]]; then
-    LINK_LIBRARY=libcryptopp.dylib
+	LINK_LIBRARY=libcryptopp.dylib
 else
-    LINK_LIBRARY=libcryptopp.so
+	LINK_LIBRARY=libcryptopp.so
 fi
 
 if [[ -z "${CXX}" ]]; then CXX=c++; fi
@@ -112,34 +112,34 @@ CPU_COUNT=1
 MEM_SIZE=512
 
 if [[ -e "/proc/cpuinfo" && -e "/proc/meminfo" ]]; then
-    CPU_COUNT=$(cat /proc/cpuinfo | "${GREP}" -c '^processor')
-    MEM_SIZE=$(cat /proc/meminfo | "${GREP}" "MemTotal" | "${AWK}" '{print $2}')
-    MEM_SIZE=$(($MEM_SIZE/1024))
+	CPU_COUNT=$(cat /proc/cpuinfo | "${GREP}" -c '^processor')
+	MEM_SIZE=$(cat /proc/meminfo | "${GREP}" "MemTotal" | "${AWK}" '{print $2}')
+	MEM_SIZE=$(($MEM_SIZE/1024))
 elif [[ "$IS_DARWIN" -ne "0" ]]; then
-    CPU_COUNT=$(sysctl -a 2>&1 | "${GREP}" 'hw.availcpu' | "${AWK}" '{print $3; exit}')
-    MEM_SIZE=$(sysctl -a 2>&1 | "${GREP}" 'hw.memsize' | "${AWK}" '{print $3; exit;}')
-    MEM_SIZE=$(($MEM_SIZE/1024/1024))
+	CPU_COUNT=$(sysctl -a 2>&1 | "${GREP}" 'hw.availcpu' | "${AWK}" '{print $3; exit}')
+	MEM_SIZE=$(sysctl -a 2>&1 | "${GREP}" 'hw.memsize' | "${AWK}" '{print $3; exit;}')
+	MEM_SIZE=$(($MEM_SIZE/1024/1024))
 elif [[ "$IS_SOLARIS" -ne "0" ]]; then
-    CPU_COUNT=$(psrinfo 2>/dev/null | wc -l | "${AWK}" '{print $1}')
-    MEM_SIZE=$(prtconf 2>/dev/null | "${GREP}" Memory | "${AWK}" '{print $3}')
+	CPU_COUNT=$(psrinfo 2>/dev/null | wc -l | "${AWK}" '{print $1}')
+	MEM_SIZE=$(prtconf 2>/dev/null | "${GREP}" Memory | "${AWK}" '{print $3}')
 fi
 
 # Some ARM devboards cannot use 'make -j N', even with multiple cores and RAM
 # An 8-core Cubietruck Plus with 2GB RAM experiences OOM kills with '-j 2'.
 HAVE_SWAP=1
 if [[ "$IS_LINUX" -ne "0" ]]; then
-    if [[ -e "/proc/meminfo" ]]; then
-        SWAP_SIZE=$(cat /proc/meminfo | "${GREP}" "SwapTotal" | "${AWK}" '{print $2}')
-        if [[ "$SWAP_SIZE" -eq "0" ]]; then
-            HAVE_SWAP=0
-        fi
-    else
-        HAVE_SWAP=0
-    fi
+	if [[ -e "/proc/meminfo" ]]; then
+		SWAP_SIZE=$(cat /proc/meminfo | "${GREP}" "SwapTotal" | "${AWK}" '{print $2}')
+		if [[ "$SWAP_SIZE" -eq "0" ]]; then
+			HAVE_SWAP=0
+		fi
+	else
+		HAVE_SWAP=0
+	fi
 fi
 
 if [[ "$CPU_COUNT" -ge "2" && "$MEM_SIZE" -ge "1280" && "$HAVE_SWAP" -ne "0" ]]; then
-    MAKEARGS=(-j "$CPU_COUNT")
+	MAKEARGS=(-j "$CPU_COUNT")
 fi
 
 #############################################################################
@@ -150,8 +150,8 @@ git checkout master -f &>/dev/null
 git checkout "$OLD_VERSION_TAG" -f &>/dev/null
 
 if [[ "$?" -ne "0" ]]; then
-    echo "Failed to checkout $OLD_VERSION_TAG"
-    exit 1
+	echo "Failed to checkout $OLD_VERSION_TAG"
+	exit 1
 fi
 
 echo
@@ -163,8 +163,8 @@ echo
 LINK_LIBRARY="$LINK_LIBRARY" "$MAKE" "${MAKEARGS[@]}" -f GNUmakefile cryptest.exe dynamic
 
 if [[ ! -f "$LINK_LIBRARY" ]]; then
-    echo "Failed to make $OLD_VERSION_TAG library"
-    exit 1
+	echo "Failed to make $OLD_VERSION_TAG library"
+	exit 1
 fi
 
 echo
@@ -174,11 +174,11 @@ echo "****************************************************************"
 echo
 
 if [[ "$IS_DARWIN" -ne "0" ]]; then
-    DYLD_LIBRARY_PATH="$PWD:$DYLD_LIBRARY_PATH" ./cryptest.exe v 2>&1 | "$CXXFILT"
-    DYLD_LIBRARY_PATH="$PWD:$DYLD_LIBRARY_PATH" ./cryptest.exe tv all 2>&1 | "$CXXFILT"
+	DYLD_LIBRARY_PATH="$PWD:$DYLD_LIBRARY_PATH" ./cryptest.exe v 2>&1 | "$CXXFILT"
+	DYLD_LIBRARY_PATH="$PWD:$DYLD_LIBRARY_PATH" ./cryptest.exe tv all 2>&1 | "$CXXFILT"
 else
-    LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH" ./cryptest.exe v 2>&1 | "$CXXFILT"
-    LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH" ./cryptest.exe tv all 2>&1 | "$CXXFILT"
+	LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH" ./cryptest.exe v 2>&1 | "$CXXFILT"
+	LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH" ./cryptest.exe tv all 2>&1 | "$CXXFILT"
 fi
 
 # Stash away old cryptest.exe
@@ -197,8 +197,8 @@ git checkout "$NEW_VERSION_TAG" -f &>/dev/null
 LINK_LIBRARY="$LINK_LIBRARY" "$MAKE" "${MAKEARGS[@]}" -f GNUmakefile cryptest.exe dynamic
 
 if [[ ! -f "$LINK_LIBRARY" ]]; then
-    echo "Failed to make $NEW_VERSION_TAG library"
-    exit 1
+	echo "Failed to make $NEW_VERSION_TAG library"
+	exit 1
 fi
 
 # Fetch old cryptest.exe
@@ -211,11 +211,11 @@ echo "****************************************************************"
 echo
 
 if [[ "$IS_DARWIN" -ne "0" ]]; then
-    DYLD_LIBRARY_PATH="$PWD:$DYLD_LIBRARY_PATH" ./cryptest.exe v 2>&1 | "$CXXFILT"
-    DYLD_LIBRARY_PATH="$PWD:$DYLD_LIBRARY_PATH" ./cryptest.exe tv all 2>&1 | "$CXXFILT"
+	DYLD_LIBRARY_PATH="$PWD:$DYLD_LIBRARY_PATH" ./cryptest.exe v 2>&1 | "$CXXFILT"
+	DYLD_LIBRARY_PATH="$PWD:$DYLD_LIBRARY_PATH" ./cryptest.exe tv all 2>&1 | "$CXXFILT"
 else
-    LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH" ./cryptest.exe v 2>&1 | "$CXXFILT"
-    LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH" ./cryptest.exe tv all 2>&1 | "$CXXFILT"
+	LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH" ./cryptest.exe v 2>&1 | "$CXXFILT"
+	LD_LIBRARY_PATH="$PWD:$LD_LIBRARY_PATH" ./cryptest.exe tv all 2>&1 | "$CXXFILT"
 fi
 
 "${MAKE}" distclean &>/dev/null && cleanup &>/dev/null

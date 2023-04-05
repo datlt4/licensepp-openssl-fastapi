@@ -39,13 +39,13 @@ echo "**************************************************"
 # breaks things. Zeroing the counters seems to be the best we can do.
 if lcov --base-directory . --directory . --zerocounters;
 then
-    echo
-    echo "Baseline zero counters ok"
-    echo
+	echo
+	echo "Baseline zero counters ok"
+	echo
 else
-    echo
-    echo "Baseline zero counters failed"
-    echo
+	echo
+	echo "Baseline zero counters failed"
+	echo
 fi
 
 #make clean > /dev/null

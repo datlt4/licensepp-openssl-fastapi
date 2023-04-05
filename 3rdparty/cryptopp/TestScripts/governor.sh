@@ -21,7 +21,7 @@
 # Fixup ancient Bash
 # https://unix.stackexchange.com/q/468579/56041
 if [[ -z "${BASH_SOURCE[0]}" ]]; then
-    BASH_SOURCE="$0"
+	BASH_SOURCE="$0"
 fi
 
 if [[ "$EUID" -ne 0 ]]; then
@@ -46,21 +46,21 @@ case $1 in
 esac
 
 if [ -z "$governor" ]; then
-    [[ "$0" = "${BASH_SOURCE[0]}" ]] && exit 1 || return 1
+	[[ "$0" = "${BASH_SOURCE[0]}" ]] && exit 1 || return 1
 fi
 
 cpus=$(ls /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor 2>/dev/null)
 
 if [ -z "$cpus" ]; then
-    echo "Failed to read CPU system device tree"
-    [[ "$0" = "${BASH_SOURCE[0]}" ]] && exit 1 || return 1
+	echo "Failed to read CPU system device tree"
+	[[ "$0" = "${BASH_SOURCE[0]}" ]] && exit 1 || return 1
 fi
 
 echo "Current CPU governor scaling settings:"
 count=0
 for cpu in $cpus; do
-    echo "  CPU $count: $(cat "$cpu")"
-    ((count++))
+	echo "  CPU $count: $(cat "$cpu")"
+	((count++))
 done
 
 if [ "x$governor" != "x" ]; then
@@ -72,8 +72,8 @@ fi
 echo "New CPU governor scaling settings:"
 count=0
 for cpu in $cpus; do
-    echo "  CPU $count: $(cat "$cpu")"
-    ((count++))
+	echo "  CPU $count: $(cat "$cpu")"
+	((count++))
 done
 
 [[ "$0" = "${BASH_SOURCE[0]}" ]] && exit 0 || return 0

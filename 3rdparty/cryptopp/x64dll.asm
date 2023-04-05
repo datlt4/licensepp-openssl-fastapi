@@ -16,60 +16,60 @@ EXTERNDEF ?SHA256_K@CryptoPP@@3QBIB:FAR
 .CODE
 
     ALIGN   8
-Baseline_Add    PROC
-    lea     rdx, [rdx+8*rcx]
-    lea     r8, [r8+8*rcx]
-    lea     r9, [r9+8*rcx]
-    neg     rcx                 ; rcx is negative index
-    jz      $1@Baseline_Add
-    mov     rax,[r8+8*rcx]
-    add     rax,[r9+8*rcx]
-    mov     [rdx+8*rcx],rax
+Baseline_Add	PROC
+	lea		rdx, [rdx+8*rcx]
+	lea		r8, [r8+8*rcx]
+	lea		r9, [r9+8*rcx]
+	neg		rcx					; rcx is negative index
+	jz		$1@Baseline_Add
+	mov		rax,[r8+8*rcx]
+	add		rax,[r9+8*rcx]
+	mov		[rdx+8*rcx],rax
 $0@Baseline_Add:
-    mov     rax,[r8+8*rcx+8]
-    adc     rax,[r9+8*rcx+8]
-    mov     [rdx+8*rcx+8],rax
-    lea     rcx,[rcx+2]         ; advance index, avoid inc which causes slowdown on Intel Core 2
-    jrcxz   $1@Baseline_Add     ; loop until rcx overflows and becomes zero
-    mov     rax,[r8+8*rcx]
-    adc     rax,[r9+8*rcx]
-    mov     [rdx+8*rcx],rax
-    jmp     $0@Baseline_Add
+	mov		rax,[r8+8*rcx+8]
+	adc		rax,[r9+8*rcx+8]
+	mov		[rdx+8*rcx+8],rax
+	lea		rcx,[rcx+2]			; advance index, avoid inc which causes slowdown on Intel Core 2
+	jrcxz	$1@Baseline_Add		; loop until rcx overflows and becomes zero
+	mov		rax,[r8+8*rcx]
+	adc		rax,[r9+8*rcx]
+	mov		[rdx+8*rcx],rax
+	jmp		$0@Baseline_Add
 $1@Baseline_Add:
-    mov     rax, 0
-    adc     rax, rax            ; store carry into rax (return result register)
-    ret
+	mov		rax, 0
+	adc		rax, rax			; store carry into rax (return result register)
+	ret
 Baseline_Add ENDP
 
     ALIGN   8
-Baseline_Sub    PROC
-    lea     rdx, [rdx+8*rcx]
-    lea     r8, [r8+8*rcx]
-    lea     r9, [r9+8*rcx]
-    neg     rcx                 ; rcx is negative index
-    jz      $1@Baseline_Sub
-    mov     rax,[r8+8*rcx]
-    sub     rax,[r9+8*rcx]
-    mov     [rdx+8*rcx],rax
+Baseline_Sub	PROC
+	lea		rdx, [rdx+8*rcx]
+	lea		r8, [r8+8*rcx]
+	lea		r9, [r9+8*rcx]
+	neg		rcx					; rcx is negative index
+	jz		$1@Baseline_Sub
+	mov		rax,[r8+8*rcx]
+	sub		rax,[r9+8*rcx]
+	mov		[rdx+8*rcx],rax
 $0@Baseline_Sub:
-    mov     rax,[r8+8*rcx+8]
-    sbb     rax,[r9+8*rcx+8]
-    mov     [rdx+8*rcx+8],rax
-    lea     rcx,[rcx+2]         ; advance index, avoid inc which causes slowdown on Intel Core 2
-    jrcxz   $1@Baseline_Sub     ; loop until rcx overflows and becomes zero
-    mov     rax,[r8+8*rcx]
-    sbb     rax,[r9+8*rcx]
-    mov     [rdx+8*rcx],rax
-    jmp     $0@Baseline_Sub
+	mov		rax,[r8+8*rcx+8]
+	sbb		rax,[r9+8*rcx+8]
+	mov		[rdx+8*rcx+8],rax
+	lea		rcx,[rcx+2]			; advance index, avoid inc which causes slowdown on Intel Core 2
+	jrcxz	$1@Baseline_Sub		; loop until rcx overflows and becomes zero
+	mov		rax,[r8+8*rcx]
+	sbb		rax,[r9+8*rcx]
+	mov		[rdx+8*rcx],rax
+	jmp		$0@Baseline_Sub
 $1@Baseline_Sub:
-    mov     rax, 0
-    adc     rax, rax            ; store carry into rax (return result register)
+	mov		rax, 0
+	adc		rax, rax			; store carry into rax (return result register)
 
-    ret
+	ret
 Baseline_Sub ENDP
 
 ALIGN   8
-Rijndael_Enc_AdvancedProcessBlocks_SSE2 PROC FRAME
+Rijndael_Enc_AdvancedProcessBlocks_SSE2	PROC FRAME
 rex_push_reg rsi
 push_reg rdi
 push_reg rbx
@@ -468,7 +468,7 @@ ret
 Rijndael_Enc_AdvancedProcessBlocks_SSE2 ENDP
 
 ALIGN   8
-GCM_AuthenticateBlocks_2K_SSE2  PROC FRAME
+GCM_AuthenticateBlocks_2K_SSE2	PROC FRAME
 rex_push_reg rsi
 push_reg rdi
 push_reg rbx
@@ -607,7 +607,7 @@ ret
 GCM_AuthenticateBlocks_2K_SSE2 ENDP
 
 ALIGN   8
-GCM_AuthenticateBlocks_64K_SSE2 PROC FRAME
+GCM_AuthenticateBlocks_64K_SSE2	PROC FRAME
 rex_push_reg rsi
 push_reg rdi
 .endprolog
@@ -687,7 +687,7 @@ ret
 GCM_AuthenticateBlocks_64K_SSE2 ENDP
 
 ALIGN   8
-SHA256_HashMultipleBlocks_SSE2  PROC FRAME
+SHA256_HashMultipleBlocks_SSE2	PROC FRAME
 rex_push_reg rsi
 push_reg rdi
 push_reg rbx
@@ -1967,11 +1967,11 @@ add rdx, 64
 mov [rsp+8*4+16*4+2*8], rdx
 cmp rdx, [rsp+8*4+16*4+3*8]
 jne label0
-add     rsp, 8*4 + 16*4 + 4*8 + 8
-pop     rbp
-pop     rbx
-pop     rdi
-pop     rsi
+add		rsp, 8*4 + 16*4 + 4*8 + 8
+pop		rbp
+pop		rbx
+pop		rdi
+pop		rsi
 ret
 SHA256_HashMultipleBlocks_SSE2 ENDP
 
@@ -1980,15 +1980,15 @@ SHA256_HashMultipleBlocks_SSE2 ENDP
 ;; ctrl = rcx
 
     ALIGN   8
-XGETBV64    PROC
+XGETBV64	PROC
     ;; query
-    DB      0fh, 01h, 0d0h
+    DB  	0fh, 01h, 0d0h
     ;; xcr = (EDX << 32) | EAX
-    and     rax, 0ffffffffh
-    shl     rdx, 32
-    or      rax, rdx
+    and 	rax, 0ffffffffh
+    shl 	rdx, 32
+    or  	rax, rdx
     ret
-XGETBV64    ENDP
+XGETBV64	ENDP
 
 ;; word64 CpuId(word32 func, word32 subfunc, word32 output[4])
 ;; func = rcx
@@ -1996,26 +1996,26 @@ XGETBV64    ENDP
 ;; output = r8
 
     ALIGN   8
-CPUID64 PROC
+CPUID64	PROC
     ;; preserve per ABI
-    mov     r9, rbx
+    mov 	r9, rbx
     ;; eax = func
-    mov     rax, rcx
+    mov 	rax, rcx
     ;; ecx = subfunc
-    mov     rcx, rdx
+    mov 	rcx, rdx
     ;; query
     cpuid
     ;; save
-    mov     [r8+0],  eax
-    mov     [r8+4],  ebx
-    mov     [r8+8],  ecx
-    mov     [r8+12], edx
+    mov 	[r8+0],  eax
+    mov 	[r8+4],  ebx
+    mov 	[r8+8],  ecx
+    mov 	[r8+12], edx
     ;; restore
-    mov     rbx, r9
+    mov 	rbx, r9
     ;; return
-    mov     rax, 1
+    mov 	rax, 1
     ret
-CPUID64 ENDP
+CPUID64	ENDP
 
 _TEXT ENDS
 END

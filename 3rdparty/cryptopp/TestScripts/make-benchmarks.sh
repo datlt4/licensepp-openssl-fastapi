@@ -20,11 +20,11 @@
 # Set to suite your taste. Speed is in GiHz
 
 if [[ -z "$CPU_FREQ" ]]; then
-    if [[ ! -z "CRYPTOPP_CPU_SPEED" ]]; then
-        CPU_FREQ="$CRYPTOPP_CPU_SPEED"
-    else
-        CPU_FREQ=2.8
-    fi
+	if [[ ! -z "CRYPTOPP_CPU_SPEED" ]]; then
+		CPU_FREQ="$CRYPTOPP_CPU_SPEED"
+	else
+		CPU_FREQ=2.8
+	fi
 fi
 
 echo "***************************************************"
@@ -37,8 +37,8 @@ echo
 current=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 git fetch --all &>/dev/null &>/dev/null
 if [[ "$?" -ne "0" ]]; then
-    echo "$PWD does not appear to be a Git repository"
-    exit 1
+	echo "$PWD does not appear to be a Git repository"
+	exit 1
 fi
 
 #############################################################################
@@ -47,43 +47,43 @@ fi
 OPT=
 
 if [[ -z "$OPT" ]]; then
-    rm -f "$TMP/adhoc.exe" &>/dev/null
-    "$CXX" -DCRYPTOPP_ADHOC_MAIN -O3 adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
-    if [[ ("$?" -eq "0") ]]; then
-        OPT=-O3
-    fi
+	rm -f "$TMP/adhoc.exe" &>/dev/null
+	"$CXX" -DCRYPTOPP_ADHOC_MAIN -O3 adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
+	if [[ ("$?" -eq "0") ]]; then
+		OPT=-O3
+	fi
 fi
 
 if [[ -z "$OPT" ]]; then
-    rm -f "$TMP/adhoc.exe" &>/dev/null
-    "$CXX" -DCRYPTOPP_ADHOC_MAIN -xO3 adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
-    if [[ ("$?" -eq "0") ]]; then
-        OPT=-xO3
-    fi
+	rm -f "$TMP/adhoc.exe" &>/dev/null
+	"$CXX" -DCRYPTOPP_ADHOC_MAIN -xO3 adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
+	if [[ ("$?" -eq "0") ]]; then
+		OPT=-xO3
+	fi
 fi
 
 if [[ -z "$OPT" ]]; then
-    rm -f "$TMP/adhoc.exe" &>/dev/null
-    "$CXX" -DCRYPTOPP_ADHOC_MAIN -O2 adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
-    if [[ ("$?" -eq "0") ]]; then
-        OPT=-O2
-    fi
+	rm -f "$TMP/adhoc.exe" &>/dev/null
+	"$CXX" -DCRYPTOPP_ADHOC_MAIN -O2 adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
+	if [[ ("$?" -eq "0") ]]; then
+		OPT=-O2
+	fi
 fi
 
 if [[ -z "$OPT" ]]; then
-    rm -f "$TMP/adhoc.exe" &>/dev/null
-    "$CXX" -DCRYPTOPP_ADHOC_MAIN -xO2 adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
-    if [[ ("$?" -eq "0") ]]; then
-        OPT=-xO2
-    fi
+	rm -f "$TMP/adhoc.exe" &>/dev/null
+	"$CXX" -DCRYPTOPP_ADHOC_MAIN -xO2 adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
+	if [[ ("$?" -eq "0") ]]; then
+		OPT=-xO2
+	fi
 fi
 
 if [[ -z "$OPT" ]]; then
-    rm -f "$TMP/adhoc.exe" &>/dev/null
-    "$CXX" -DCRYPTOPP_ADHOC_MAIN -O adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
-    if [[ ("$?" -eq "0") ]]; then
-        OPT=-O
-    fi
+	rm -f "$TMP/adhoc.exe" &>/dev/null
+	"$CXX" -DCRYPTOPP_ADHOC_MAIN -O adhoc.cpp -o "$TMP/adhoc.exe" &>/dev/null
+	if [[ ("$?" -eq "0") ]]; then
+		OPT=-O
+	fi
 fi
 
 #############################################################################
@@ -95,21 +95,21 @@ echo
 
 git checkout -f CRYPTOPP_5_6_2 &>/dev/null
 if [[ "$?" -ne "0" ]]; then
-    echo "git checkout CRYPTOPP_5_6_2 failed"
+	echo "git checkout CRYPTOPP_5_6_2 failed"
 else
-    rm -f *.o benchmarks.html benchmarks-562.html &>/dev/null
+	rm -f *.o benchmarks.html benchmarks-562.html &>/dev/null
 
-    CXXFLAGS="-DNDEBUG $OPT" make
-    if [[ "$?" -eq "0" ]]; then
-        echo "Running benchmarks for Crypto++ 5.6.2"
-        ./cryptest.exe b 3 "$CPU_FREQ" > benchmarks-562.html
-        if [[ "$?" -ne "0" ]]; then
-            rm -rf benchmarks-562.html &>/dev/null
-            echo "Failed to create benchmarks for Crypto++ 5.6.2"
-        fi
-    else
-        echo "Failed to make benchmarks for Crypto++ 5.6.2"
-    fi
+	CXXFLAGS="-DNDEBUG $OPT" make
+	if [[ "$?" -eq "0" ]]; then
+		echo "Running benchmarks for Crypto++ 5.6.2"
+		./cryptest.exe b 3 "$CPU_FREQ" > benchmarks-562.html
+		if [[ "$?" -ne "0" ]]; then
+			rm -rf benchmarks-562.html &>/dev/null
+			echo "Failed to create benchmarks for Crypto++ 5.6.2"
+		fi
+	else
+		echo "Failed to make benchmarks for Crypto++ 5.6.2"
+	fi
 fi
 
 #############################################################################
@@ -121,21 +121,21 @@ echo
 
 git checkout -f CRYPTOPP_5_6_4 &>/dev/null
 if [[ "$?" -ne "0" ]]; then
-    echo "git checkout CRYPTOPP_5_6_4 failed"
+	echo "git checkout CRYPTOPP_5_6_4 failed"
 else
-    rm -f *.o benchmarks.html benchmarks-564.html &>/dev/null
+	rm -f *.o benchmarks.html benchmarks-564.html &>/dev/null
 
-    CXXFLAGS="-DNDEBUG $OPT" make
-    if [[ "$?" -eq "0" ]]; then
-        echo "Running benchmarks for Crypto++ 5.6.4"
-        ./cryptest.exe b 3 "$CPU_FREQ" > benchmarks-564.html
-        if [[ "$?" -ne "0" ]]; then
-            rm -rf benchmarks-564.html &>/dev/null
-            echo "Failed to create benchmarks for Crypto++ 5.6.4"
-        fi
-    else
-        echo "Failed to make benchmarks for Crypto++ 5.6.4"
-    fi
+	CXXFLAGS="-DNDEBUG $OPT" make
+	if [[ "$?" -eq "0" ]]; then
+		echo "Running benchmarks for Crypto++ 5.6.4"
+		./cryptest.exe b 3 "$CPU_FREQ" > benchmarks-564.html
+		if [[ "$?" -ne "0" ]]; then
+			rm -rf benchmarks-564.html &>/dev/null
+			echo "Failed to create benchmarks for Crypto++ 5.6.4"
+		fi
+	else
+		echo "Failed to make benchmarks for Crypto++ 5.6.4"
+	fi
 fi
 
 #############################################################################
@@ -147,27 +147,27 @@ echo
 
 git checkout -f master &>/dev/null
 if [[ "$?" -ne "0" ]]; then
-    echo "git checkout master failed"
+	echo "git checkout master failed"
 else
-    rm -f *.o benchmarks.html benchmarks-master.html &>/dev/null
+	rm -f *.o benchmarks.html benchmarks-master.html &>/dev/null
 
-    CXXFLAGS="-DNDEBUG $OPT" make
-    if [[ "$?" -eq "0" ]]; then
-        echo "Running benchmarks for Crypto++ Master"
-        ./cryptest.exe b 3 "$CPU_FREQ" > benchmarks-master.html
-        if [[ "$?" -ne "0" ]]; then
-            rm -rf benchmarks-master.html &>/dev/null
-            echo "Failed to create benchmarks for Crypto++ Master"
-        fi
-    else
-        echo "Failed to make benchmarks for Crypto++ Master"
-    fi
+	CXXFLAGS="-DNDEBUG $OPT" make
+	if [[ "$?" -eq "0" ]]; then
+		echo "Running benchmarks for Crypto++ Master"
+		./cryptest.exe b 3 "$CPU_FREQ" > benchmarks-master.html
+		if [[ "$?" -ne "0" ]]; then
+			rm -rf benchmarks-master.html &>/dev/null
+			echo "Failed to create benchmarks for Crypto++ Master"
+		fi
+	else
+		echo "Failed to make benchmarks for Crypto++ Master"
+	fi
 fi
 
 #############################################################################
 
 if [[ ! -z "$current" ]]; then
-    git checkout -f "$current"
+	git checkout -f "$current"
 fi
 
 exit 0

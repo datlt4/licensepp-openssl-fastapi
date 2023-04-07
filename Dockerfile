@@ -29,5 +29,5 @@ RUN cd /root/licensepp-openssl-flask && \
 
 # RUN
 EXPOSE 6464
-WORKDIR /root/licensepp-openssl-ythoflask
+WORKDIR /root/licensepp-openssl-flask
 CMD ["bash", "-c", "export LD_LIBRARY_PATH=/usr/local/lib && python3 server.py --host 0.0.0.0 --port 6464"]

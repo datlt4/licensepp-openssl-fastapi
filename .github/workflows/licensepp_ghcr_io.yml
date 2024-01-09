@@ -48,5 +48,7 @@ jobs:
           context: .  # Docker context (path to Dockerfile and build context)
           file: ./Dockerfile  # Path to Dockerfile (if not in the root)
           push: true  # Push the built image to a registry
-          tags: ghcr.io/${{ github.actor }}/${{ env.repository_name }}:${{ env.branch }}-${{ env.sha_short }}
+          tags: |
+            ghcr.io/${{ github.actor }}/${{ env.repository_name }}:${{ env.branch }}-${{ env.sha_short }}
+            ghcr.io/${{ github.actor }}/${{ env.repository_name }}:latest
 

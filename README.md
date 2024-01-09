@@ -183,3 +183,4 @@ pre-commit autoupdate   # To update this file
 ## API
 
 ![User swagger UI to show all avaiable endpoints](asset/swagger_UI.png "User swagger UI to show all avaiable endpoints").
+
